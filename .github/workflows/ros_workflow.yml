@@ -1,0 +1,25 @@
+name: ROS Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+      -
+        name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+          
+      - uses: ros-tooling/setup-ros@v0.6
+        with:
+          required-ros-distributions: noetic
+      - uses: ros-tooling/action-ros-ci@v0.3
+        with:
+          package-name: my_package
+          target-ros1-distro: noetic

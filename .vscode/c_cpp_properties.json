@@ -1,0 +1,25 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/akhad/test_ws/install/scout_msgs/include/**",
+        "/home/akhad/docker_ros/ros1_ws/install/scout_gazebo_sim/include/**",
+        "/home/akhad/docker_ros/ros1_ws/install/ira_laser_tools/include/**",
+        "/home/akhad/colcon_workspace/install/caytu_msgs/include/**",
+        "/opt/ros/noetic/include/**",
+        "/home/akhad/docker_ros/ros1_ws/install/scout_gazebo_sim/share/scout_gazebo_sim/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}
