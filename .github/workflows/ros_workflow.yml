@@ -1,4 +1,4 @@
-name: ROS Noetic Build
+name: ROS Noetic Build and Launch
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  build:
+  build_and_launch:
     runs-on: ubuntu-20.04
 
     steps:
@@ -33,5 +33,15 @@ jobs:
 
       - name: Build workspace with colcon
         run: |
-          cd ~/test_ws
+          cd ${{ github.workspace }}/test_ws
           colcon build
+
+      - name: Install ROS packages with rosdep
+        run: |
+          cd ${{ github.workspace }}/test_ws
+          rosdep install --from-paths src --ignore-src --rosdistro noetic -y --skip-keys "package1 package2"
+
+      - name: Launch rrbot_world
+        run: |
+          source /opt/ros/noetic/setup.bash
+          roslaunch rrbot_gazebo rrbot_world.launch
