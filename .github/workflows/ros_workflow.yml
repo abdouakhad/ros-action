@@ -9,9 +9,10 @@ on:
       - main
 
 jobs:
-  build_and_launch:
+  build:
     runs-on: ubuntu-20.04
-
+    env:
+      ROS_DISTRO: noetic
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -31,17 +32,26 @@ jobs:
           sudo rosdep init
           rosdep update
 
-      - name: Build workspace with colcon
-        run: |
-          cd ${{ github.workspace }}/test_ws
-          colcon build
-
       - name: Install ROS packages with rosdep
         run: |
-          cd ${{ github.workspace }}/test_ws
-          rosdep install --from-paths src --ignore-src --rosdistro noetic -y --skip-keys "package1 package2"
+          source /opt/ros/noetic/setup.bash
+          sudo rosdep init
+          rosdep update
+          ln -s $GITHUB_WORKSPACE ~/test_ws/src
+          cd ~/test_ws
+          rosdep install --from-paths src --ignore-src -r -s
+          rosdep install --from-paths src --ignore-src -ry
+
+      - name: Build workspace with colcon
+        run: |
+          source /opt/ros/$ROS_DISTRO/setup.bash
+          cd ~/test_ws
+          colcon build
+          source install/setup.bash
 
       - name: Launch rrbot_world
         run: |
-          source /opt/ros/noetic/setup.bash
+          source /opt/ros/$ROS_DISTRO/setup.bash
+          cd ~/test_ws
+          source install/setup.bash
           roslaunch rrbot_gazebo rrbot_world.launch
