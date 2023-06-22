@@ -29,7 +29,6 @@ jobs:
 
       - name: Build workspace with colcon
         run: |
-          source /opt/ros/$ROS_DISTRO/setup.bash
           cd ~/test_ws
           colcon build
           source install/setup.bash
