@@ -29,6 +29,7 @@ jobs:
 
       - name: Build workspace with colcon
         run: |
+          ln -s $GITHUB_WORKSPACE ~/test_ws/src 
           cd ~/test_ws
           colcon build
           source install/setup.bash
